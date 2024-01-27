@@ -2,33 +2,44 @@ version: '3.8'
 
 services:
   django:
-    image: ahora-health:latest  # You might want to build this from a Dockerfile
-    command: bash -c "python manage.py wait_for_db && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    image: ahora-health:latest 
+    command: bash -c "python manage.py wait_for_db && python manage.py migrate && gunicorn --env DJANGO_SETTINGS_MODULE=healthService.settings healthService.wsgi:application"
     volumes:
-      - .:/app  # Mounts the project directory to the container
+      - .:/app  
     ports:
       - "8000:8000"
     depends_on:
       - db
       - redis
     environment:
-      - "DATABASE_URL=postgres://user:password@db:5432/dbname"
       - "CELERY_BROKER_URL=redis://redis:6379/0"
       - "CELERY_RESULT_BACKEND=redis://redis:6379/0"
+      - "DEBUG=0"
+      - "POSTGRES_NAME=ahorfazel"
+      - "POSTGRES_USER=ahorfazel"
+      - "POSTGRES_PASSWORD=ahora-fazel"
+      - "POSTGRES_HOST=postgres"
+      - "POSTGRES_PORT=5432"
+      - "TESTCYCLE=3600" #in seconds
+
 
   db:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=dbname
+      - POSTGRES_USER=ahorfazel
+      - POSTGRES_PASSWORD=ahorfazel
+      - POSTGRES_DB=ahorfazel
+    ports:
+      - 5432:5432
 
   redis:
     image: redis:latest
     volumes:
       - redis_data:/data
+    ports:
+      - 6379:6379
 
   celeryworker:
     image:  ahora-health:latest

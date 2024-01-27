@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -74,13 +74,22 @@ WSGI_APPLICATION = "healthService.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-DATABASES = {
-    "default": {
+PSQL = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("POSTGRES_NAME"), 
+        'USER': os.environ.get("POSTGRES_USER"),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"), 
+        'HOST': os.environ.get("POSTGRES_HOST"),
+        'PORT': int(os.environ.get("POSTGRES_PORT")),
+        }
+SQLITE = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+DATABASES = {
+    "default": SQLITE if os.environ.get("DEBUG") == "1" else PSQL
 }
+
 
 
 # Password validation
@@ -126,12 +135,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
-CELERY_BROKER_URL = 'redis://localhost:6379/'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://localhost:6379");
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://localhost:6379");
 CELERY_BEAT_SCHEDULE = {
     'check-server-health-every-hour': {
         'task': 'healthServiceApi.tasks.check_server_health',
-        'schedule': 3600,  
+        'schedule': int(os.environ.get("TESTCYCLE", "3600")),  
     },
 
 }
