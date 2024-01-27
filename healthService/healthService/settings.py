@@ -123,3 +123,18 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BEAT_SCHEDULE = {
+    # 'check-server-health-every-hour': {
+    #     'task': 'healthServiceApi.tasks.check_server_health',
+    #     'schedule': 3600.0,  
+    # },
+    'print-test': {
+        'task': 'healthServiceApi.tasks.test',
+        'schedule': 1,  
+    },
+}
