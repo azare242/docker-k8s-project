@@ -9,19 +9,18 @@ def check_server_health():
         try:
             response = requests.get(server.address)
             if response.status_code == 200:
-                server.success += 1
+                print(f"Server {server.address} Is Alive")
+                server.success_count += 1
                 server.save()
             else:
-                server.failure += 1
+                print(f"Server {server.address} Is Dead")
+                server.failure_count += 1
                 server.last_failure = now()
                 server.save()
         except requests.RequestException:
-            server.failure += 1
+            print(f"Server {server.address} Is Dead")
+            
+            server.failure_count += 1
             server.last_failure = now()
             server.save()
             
-            
-            
-@shared_task
-def test():
-    print("test completed")
