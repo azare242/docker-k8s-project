@@ -76,18 +76,18 @@ WSGI_APPLICATION = "healthService.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 PSQL = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("POSTGRES_NAME"), 
-        'USER': os.environ.get("POSTGRES_USER"),
-        'PASSWORD': os.environ.get("POSTGRES_PASSWORD"), 
+        'NAME': os.environ.get("POSTGRES_NAME", ""), 
+        'USER': os.environ.get("POSTGRES_USER", ""),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", ""), 
         'HOST': os.environ.get("POSTGRES_HOST"),
-        'PORT': int(os.environ.get("POSTGRES_PORT")),
+        'PORT': int(os.environ.get("POSTGRES_PORT", "1")),
         }
 SQLITE = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
 DATABASES = {
-    "default": SQLITE if os.environ.get("DEBUG") == "1" else PSQL
+    "default": SQLITE if os.environ.get("DEBUG", "1") == "1" else PSQL
 }
 
 
@@ -140,7 +140,7 @@ CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://localho
 CELERY_BEAT_SCHEDULE = {
     'check-server-health-every-hour': {
         'task': 'healthServiceApi.tasks.check_server_health',
-        'schedule': int(os.environ.get("TESTCYCLE", "3600")),  
+        'schedule': int(os.environ.get("TESTCYCLE", "10")),  
     },
 
 }
