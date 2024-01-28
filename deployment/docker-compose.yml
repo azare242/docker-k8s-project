@@ -44,7 +44,7 @@ services:
   celeryworker:
     image:  health:latest
     command: sh -c "celery -A healthService worker --loglevel=info"
-      environment:
+    environment:
       - "CELERY_BROKER_URL=redis://redis:6379/0"
       - "CELERY_RESULT_BACKEND=redis://redis:6379/0"
       - "DEBUG=0"
@@ -62,8 +62,8 @@ services:
 
   celerybeat:
     image:  health:latest
-      command: sh -c "celery -A healthService beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
-      environment:
+    command: sh -c "celery -A healthService beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    environment:
       - "CELERY_BROKER_URL=redis://redis:6379/0"
       - "CELERY_RESULT_BACKEND=redis://redis:6379/0"
       - "DEBUG=0"
