@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-config
+data:
+  DJANGO_PORT: "80"  # Port on which Django app runs
+  DATABASE_URL: "postgres://ahorfazel:ahora-fazel@postgres:5432/ahorfazel"  # Database URL
+  TESTCYCLE: "3600"  # Custom configuration parameter (e.g., interval for a task)
+  # Add any other configuration parameters that your application needs
