@@ -74,24 +74,34 @@ WSGI_APPLICATION = "healthService.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-PSQL = {
+PSQL_READ = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get("POSTGRES_NAME", ""), 
         'USER': os.environ.get("POSTGRES_USER", ""),
         'PASSWORD': os.environ.get("POSTGRES_PASSWORD", ""), 
-        'HOST': os.environ.get("POSTGRES_HOST"),
+        'HOST': os.environ.get("POSTGRES_HOST_READ"),
+        'PORT': int(os.environ.get("POSTGRES_PORT", "1")),
+        }
+PSQL_WRITE = {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get("POSTGRES_NAME", ""), 
+        'USER': os.environ.get("POSTGRES_USER", ""),
+        'PASSWORD': os.environ.get("POSTGRES_PASSWORD", ""), 
+        'HOST': os.environ.get("POSTGRES_HOST_WRITE"),
         'PORT': int(os.environ.get("POSTGRES_PORT", "1")),
         }
 SQLITE = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
     }
+
 DATABASES = {
-    "default": SQLITE if os.environ.get("DEBUG", "1") == "1" else PSQL
+    "read": SQLITE if os.environ.get("DEBUG", "1") == "1" else PSQL_READ,
+    "default":  SQLITE if os.environ.get("DEBUG", "1") == "1" else PSQL_WRITE,
 }
 
 
-
+DATABASE_ROUTERS = ['healthServiceApi.models.PrimaryReplicaRouter']
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 

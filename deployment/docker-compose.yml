@@ -18,9 +18,10 @@ services:
       - "POSTGRES_NAME=ahorfazel"
       - "POSTGRES_USER=ahorfazel"
       - "POSTGRES_PASSWORD=ahora-fazel"
-      - "POSTGRES_HOST=postgres"
+      - "POSTGRES_HOST_READ=postgres"
+      - "POSTGRES_HOST_WRITE=postgres"
       - "POSTGRES_PORT=5432"
-      - "TESTCYCLE=3600"
+      - "TESTCYCLE=3600" 
 
 
   postgres:
@@ -52,7 +53,8 @@ services:
       - "POSTGRES_NAME=ahorfazel"
       - "POSTGRES_USER=ahorfazel"
       - "POSTGRES_PASSWORD=ahora-fazel"
-      - "POSTGRES_HOST=postgres"
+      - "POSTGRES_HOST_READ=postgres"
+      - "POSTGRES_HOST_WRITE=postgres"
       - "POSTGRES_PORT=5432"
       - "TESTCYCLE=3600" 
     volumes:
@@ -71,7 +73,8 @@ services:
       - "POSTGRES_NAME=ahorfazel"
       - "POSTGRES_USER=ahorfazel"
       - "POSTGRES_PASSWORD=ahora-fazel"
-      - "POSTGRES_HOST=postgres"
+      - "POSTGRES_HOST_READ=postgres"
+      - "POSTGRES_HOST_WRITE=postgres"
       - "POSTGRES_PORT=5432"
       - "TESTCYCLE=3600" 
     volumes:
