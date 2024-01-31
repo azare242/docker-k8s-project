@@ -1,9 +1,14 @@
+# app-configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: django-config
+  name: app-config
 data:
-  DJANGO_PORT: "80"  # Port on which Django app runs
-  DATABASE_URL: "postgres://ahorfazel:ahora-fazel@postgres:5432/ahorfazel"  # Database URL
-  TESTCYCLE: "3600"  # Custom configuration parameter (e.g., interval for a task)
-  # Add any other configuration parameters that your application needs
+  POSTGRES_NAME: ahorfazel
+  POSTGRES_HOST_READ: postgres
+  POSTGRES_HOST_WRITE: postgres
+  POSTGRES_PORT: "5432"
+  TESTCYCLE: "3600"
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+  DEBUG: "0"
