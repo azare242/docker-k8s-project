@@ -1,1 +1,2 @@
 {{- define "health.labels" -}}
+{{- end -}}
