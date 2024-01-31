@@ -6,8 +6,9 @@ metadata:
 spec:
   selector:
     app: postgres
-    role: replica
   ports:
     - protocol: TCP
       port: 5432
       targetPort: 5432
+  selector:
+    statefulset.kubernetes.io/pod-name: postgres-1
