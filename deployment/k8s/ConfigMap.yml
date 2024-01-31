@@ -5,8 +5,8 @@ metadata:
   name: app-config
 data:
   POSTGRES_NAME: ahorfazel
-  POSTGRES_HOST_READ: postgres
-  POSTGRES_HOST_WRITE: postgres
+  POSTGRES_HOST_READ: postgres-replica
+  POSTGRES_HOST_WRITE: postgres-primary
   POSTGRES_PORT: "5432"
   TESTCYCLE: "3600"
   CELERY_BROKER_URL: "redis://redis:6379/0"
