@@ -13,11 +13,16 @@ spec:
         app: celery-worker
     spec:
       containers:
-      - name: celery-worker
-        image: health:latest
-        command: ["sh", "-c", "sleep 40 && celery -A healthService worker --loglevel=info"]
-        envFrom:
-        - configMapRef:
-            name: app-config
-        - secretRef:
-            name: db-credentials
+        - name: celery-worker
+          image: amirfazel/health:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "sleep 40 && celery -A healthService worker --loglevel=info",
+            ]
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: db-credentials

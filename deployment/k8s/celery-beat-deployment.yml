@@ -13,11 +13,16 @@ spec:
         app: celery-beat
     spec:
       containers:
-      - name: celery-beat
-        image: health:latest
-        command: ["sh", "-c", "sleep 40 && celery -A healthService beat --loglevel=info"]
-        envFrom:
-        - configMapRef:
-            name: app-config
-        - secretRef:
-            name: db-credentials
+        - name: celery-beat
+          image: amirfazel/health:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "sleep 40 && celery -A healthService beat --loglevel=info",
+            ]
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: db-credentials
