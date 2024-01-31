@@ -1,0 +1,13 @@
+# app-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  POSTGRES_NAME: ahorfazel
+  POSTGRES_HOST_READ: postgres
+  POSTGRES_HOST_WRITE: postgres
+  POSTGRES_PORT: "5432"
+  TESTCYCLE: "3600"
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/0"

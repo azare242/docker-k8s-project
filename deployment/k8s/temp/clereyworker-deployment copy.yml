@@ -1,0 +1,29 @@
+# django-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clereyworker-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: clereyworker
+  template:
+    metadata:
+      labels:
+        app: clereyworker
+    spec:
+      containers:
+      - name: clereyworker
+        image: amirfazel/health:latest
+        command: ["sh", "-c", "sleep 40 && celery -A healthService worker --loglevel=info"]
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: db-credentials
+        env:
+        - name: DEBUG
+          value: "0"
