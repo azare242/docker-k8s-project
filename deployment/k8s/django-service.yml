@@ -9,4 +9,4 @@ spec:
   - protocol: TCP
     port: 8000
     targetPort: 80
-  type: LoadBalancer
+  type: ClusterIP
