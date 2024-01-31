@@ -1,0 +1,12 @@
+apiVersion: v2
+name: health
+description: A Helm chart for the health project
+version: 0.1.0
+
+dependencies:
+  - name: prometheus
+    version: 25.10.0
+    repository: "https://prometheus-community.github.io/helm-charts"
+  - name: grafana
+    version: 7.2.4
+    repository: "https://grafana.github.io/helm-charts"

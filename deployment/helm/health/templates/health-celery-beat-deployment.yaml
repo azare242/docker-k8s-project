@@ -1,0 +1,28 @@
+# django-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celerybeat-deployment
+spec:
+  selector:
+    matchLabels:
+      app: celerybeat
+  template:
+    metadata:
+      labels:
+        app: celerybeat
+    spec:
+      containers:
+      - name: celerybeat
+        image: amirfazel/health:latest
+        command: ["sh", "-c", "sleep 20 && celery -A healthService beat --loglevel=info"]
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: db-credentials
+        env:
+        - name: DEBUG
+          value: "0"

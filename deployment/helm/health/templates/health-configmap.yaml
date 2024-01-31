@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    {{- include "health.labels" . | nindent 4 }}
+data:
+# app-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  POSTGRES_NAME: ahorfazel
+  POSTGRES_HOST_READ: postgres-replica
+  POSTGRES_HOST_WRITE: postgres-primary
+  POSTGRES_PORT: "5432"
+  TESTCYCLE: "3600"
+  CELERY_BROKER_URL: "redis://redis:6379/0"
+  CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+  DEBUG: "0"

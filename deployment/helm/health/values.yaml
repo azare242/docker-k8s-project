@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: feri80/health
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+  containerPort: 80
+
+env:
+  TIMECYCLE: 3600
+
+pg:
+  database: ahorfazel
+  username: ahorfazel
+  password: ahora-fazel
+  image: postgres:latest
+
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    serviceMonitors:
+      - name: "health"
+        selector:
+          matchLabels:
+            app: "health"
+        endpoints:
+          - port: "http"
+            interval: "30s"
+
+grafana:
+  enabled: true
+  adminPassword: "admin"
+  service:
+    type: LoadBalancer

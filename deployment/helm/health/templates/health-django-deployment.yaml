@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-app
+  labels:
+    {{- include "health.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-app
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-app
+    spec:
+      containers:
+        - name: django
+          image: amirfazel/health:latest
+          command:
+            [
+              "sh",
+              "-c",
+              "sleep 30 && python manage.py migrate && python manage.py runserver 0.0.0.0:80",
+            ]
+          ports:
+            - containerPort: 80
+          livenessProbe:
+            httpGet:
+              path: /api/ping/
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: db-credentials
+          env:
+            - name: DEBUG
+              value: "0"

@@ -1,0 +1,9 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: clereyworker-service
+spec:
+  selector:
+    app: clereyworker
+  type: ClusterIP
