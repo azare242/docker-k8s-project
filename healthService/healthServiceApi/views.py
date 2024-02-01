@@ -12,6 +12,18 @@ def ping(request):
     return Response(status=200)
 
 
+@api_view(["GET"])
+def ready(request):
+    try:
+        _ = Server.objects.all()
+        return Response(status=200)
+    except:
+        return Response(status=500)
+
+@api_view(["GET"])
+def start(request):
+    return Response(status=200)
+
 
 
 

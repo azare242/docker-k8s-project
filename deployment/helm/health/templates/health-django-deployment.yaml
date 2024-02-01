@@ -31,13 +31,13 @@ spec:
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /api/read/
+              path: /api/ready/
               port: {{ .Values.service.port }}
             initialDelaySeconds: 5
             periodSeconds: 20
           startupProbe:
             httpGet:
-              path: /api/startup
+              path: /api/start/
               port: {{ .Values.service.port }}
             failureThreshold: 30
             periodSeconds: 10
