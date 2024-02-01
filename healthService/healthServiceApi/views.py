@@ -49,7 +49,7 @@ def ready(request):
         servers_total.set(0)
         return Response(status=500)
 
-# ... Decorate other view functions similarly ...
+
 
 
 @api_view(["GET"])
@@ -63,6 +63,7 @@ def ready(request):
         _ = Server.objects.all()
         return Response(status=200)
     except:
+        http_requests_failed.inc(1)
         return Response(status=500)
 
 @api_view(["GET"])
@@ -74,6 +75,7 @@ def start(request):
 
 @api_view(["POST", "GET"])
 def submit_server_or_check_server(request):
+    http_requests_total.inc(1)
     if request.method == "GET":
         server_id = request.query_params.get('id')
         try:
@@ -81,20 +83,29 @@ def submit_server_or_check_server(request):
             serializer = ServerSerializer(server)
             return Response(serializer.data)
         except Server.DoesNotExist:
+            http_requests_failed.inc(1)
             return Response(status=404)
     else:
         try:
+           
             address = request.data['address']
             server = Server(address=address)
             server.save()
+            servers_total.inc(1)
             return Response(status=201)
         except:
+            http_requests_failed.inc(1)
             return Response(status=400)
             
     
 
 @api_view(["GET"])
 def check_all_servers(request):
-    servers = Server.objects.all()
-    serializer = ServerSerializer(servers, many=True)
-    return Response(serializer.data)
+    http_requests_total.inc(1)
+    try:
+        servers = Server.objects.all()
+        serializer = ServerSerializer(servers, many=True)
+        return Response(serializer.data)
+    except:
+        http_requests_failed.inc(1)
+        return Response(status=500)
