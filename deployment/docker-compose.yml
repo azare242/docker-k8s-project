@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   django:
-    image: health:latest 
+    image: amirfazel/health:latest 
     command: sh -c "sleep 30 && python manage.py migrate && python manage.py runserver 0.0.0.0:80"
     volumes:
       - .:/app  
@@ -44,7 +44,7 @@ services:
       - 6379:6379
 
   celeryworker:
-    image:  health:latest
+    image: amirfazel/health:latest 
     command: sh -c "sleep 40 && celery -A healthService worker --loglevel=info"
     environment:
       - "CELERY_BROKER_URL=redis://redis:6379/0"
@@ -64,7 +64,7 @@ services:
       - redis
 
   celerybeat:
-    image:  health:latest
+    image:  amirfazel/health:latest
     command: sh -c "sleep 40 && celery -A healthService beat --loglevel=info"
     environment:
       - "CELERY_BROKER_URL=redis://redis:6379/0"

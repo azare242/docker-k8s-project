@@ -18,7 +18,7 @@ postgresql:
   replicaCount: 1 
   auth: 
     database: ahorfazel 
-    username: ahorafazel
+    username: ahorfazel
     password: ahora-fazel
   image: 
     registry: docker.io 
