@@ -1,18 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-config
-  labels:
-    {{- include "health.labels" . | nindent 4 }}
-data:
-# app-configmap.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
   name: app-config
 data:
-  POSTGRES_NAME: ahorfazel
-  POSTGRES_HOST_READ: postgres-replica
+  POSTGRES_NAME: {{ .Values.pg.database }}
+  POSTGRES_HOST_READ: postgres-primary
   POSTGRES_HOST_WRITE: postgres-primary
   POSTGRES_PORT: "5432"
   TESTCYCLE: "3600"

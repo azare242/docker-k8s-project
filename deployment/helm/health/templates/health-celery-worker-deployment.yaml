@@ -15,9 +15,7 @@ spec:
       containers:
       - name: clereyworker
         image: amirfazel/health:latest
-        command: ["sh", "-c", "sleep 20 && celery -A healthService worker --loglevel=info"]
-        ports:
-        - containerPort: 80
+        command: ["sh", "-c", "celery -A healthService worker --loglevel=info"]
         envFrom:
         - configMapRef:
             name: app-config

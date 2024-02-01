@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-app
-  labels:
-    {{- include "health.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -21,7 +19,7 @@ spec:
             [
               "sh",
               "-c",
-              "sleep 30 && python manage.py migrate && python manage.py runserver 0.0.0.0:80",
+              "python manage.py migrate && python manage.py runserver 0.0.0.0:80",
             ]
           ports:
             - containerPort: 80
@@ -31,6 +29,18 @@ spec:
               port: {{ .Values.service.port }}
             initialDelaySeconds: 15
             periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /api/read/
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: 5
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /api/startup
+              port: {{ .Values.service.port }}
+            failureThreshold: 30
+            periodSeconds: 10
           envFrom:
             - configMapRef:
                 name: app-config

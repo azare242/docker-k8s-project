@@ -24,7 +24,7 @@ spec:
             - name: POSTGRES_USER
               value: "ahorfazel" 
             - name: POSTGRES_PASSWORD
-              value: "ahora-fazel"
+              value: {{ .Values.pg.database }}
             - name: POSTGRES_DB
               value: "ahorfazel"
           volumeMounts:
