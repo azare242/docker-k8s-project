@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: django
-          image: amirfazel/health:latest
+          image: amirfazel/health:2.0
           command:
             [
               "sh",
@@ -31,13 +31,13 @@ spec:
             periodSeconds: 20
           readinessProbe:
             httpGet:
-              path: /api/ready/
+              path: /api/read/
               port: {{ .Values.service.port }}
             initialDelaySeconds: 5
             periodSeconds: 20
           startupProbe:
             httpGet:
-              path: /api/start/
+              path: /api/startup
               port: {{ .Values.service.port }}
             failureThreshold: 30
             periodSeconds: 10

@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: feri80/health
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "2.0"
 
 service:
   type: ClusterIP
@@ -13,11 +13,19 @@ service:
 env:
   TIMECYCLE: 3600
 
-pg:
-  database: ahorfazel
-  username: ahorfazel
-  password: ahora-fazel
-  image: postgres:latest
+postgresql: 
+  architecture: replication
+  replicaCount: 1 
+  auth: 
+    database: ahorfazel 
+    username: ahorafazel
+    password: ahora-fazel
+  image: 
+    registry: docker.io 
+    repository: bitnami/postgresql 
+    tag: "13.0.0-debian-10-r0" 
+    pullPolicy: IfNotPresent
+
 
 prometheus:
   prometheusSpec:

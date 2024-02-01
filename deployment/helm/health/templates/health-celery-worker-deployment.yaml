@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: clereyworker
-        image: amirfazel/health:latest
+        image: amirfazel/health:2.0
         command: ["sh", "-c", "celery -A healthService worker --loglevel=info"]
         envFrom:
         - configMapRef:

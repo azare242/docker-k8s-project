@@ -5,5 +5,8 @@ dependencies:
 - name: grafana
   repository: https://grafana.github.io/helm-charts
   version: 7.2.4
-digest: sha256:5d92f37ecbc8627439be37e8a6c87951fb6c504cecbc2fa3ac36c4dd35cec42d
-generated: "2024-02-01T02:08:28.194711025+03:30"
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 13.4.3
+digest: sha256:93ac834a0b5e08a98d62b9db85bca163d775dbd8dada07cea222a7624a26c24b
+generated: "2024-02-01T04:36:55.197090065+03:30"

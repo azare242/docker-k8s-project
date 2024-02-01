@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: celerybeat
-        image: amirfazel/health:latest
+        image: amirfazel/health:2.0
         command: ["sh", "-c", "sleep 40 && celery -A healthService beat --loglevel=info"]
         ports:
         - containerPort: 80

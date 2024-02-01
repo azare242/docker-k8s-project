@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: celery-worker
-          image: amirfazel/health:latest
+          image: amirfazel/health:2.0
           command:
             [
               "sh",

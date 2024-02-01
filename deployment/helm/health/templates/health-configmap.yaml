@@ -3,9 +3,9 @@ kind: ConfigMap
 metadata:
   name: app-config
 data:
-  POSTGRES_NAME: {{ .Values.pg.database }}
-  POSTGRES_HOST_READ: postgres-primary
-  POSTGRES_HOST_WRITE: postgres-primary
+  POSTGRES_NAME: {{ .Values.postgresql.auth.database }}
+  POSTGRES_HOST_READ: healthr-postgresql-read-0
+  POSTGRES_HOST_WRITE: healthr-postgresql-primary-0
   POSTGRES_PORT: "5432"
   TESTCYCLE: "3600"
   CELERY_BROKER_URL: "redis://redis:6379/0"
